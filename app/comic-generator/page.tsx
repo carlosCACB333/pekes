@@ -61,3 +61,6 @@ const SubmitButton = () => {
     </Button>
   );
 };
+
+
+export const maxDuration = 60;
