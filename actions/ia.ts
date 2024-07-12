@@ -35,7 +35,7 @@ export const getConversation = async (prevState: any, form: FormData) => {
     system:
       "Convierte un texto en una conversación de varias escenas. Usa un tono infantil.",
     prompt: message,
-    maxTokens: 200,
+    maxTokens: 1000,
   });
 
   return object.scenes;
