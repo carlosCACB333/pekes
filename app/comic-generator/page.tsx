@@ -31,17 +31,15 @@ export default function ComicGenerator() {
           <Card key={index}>
             <CardBody>
               <h2 className={text({ size: "base", font: "bold" })}>
-                {conversation.situacion}
+                {conversation.context}
               </h2>
               <div className="flex flex-col gap-2">
-                {conversation.dialogos.map((dialogo, index) => (
+                {conversation.dialogues.map((dialogo, index) => (
                   <div key={index} className="flex gap-1 items-center">
                     <span className={text({ size: "sm", font: "bold" })}>
-                      {dialogo.personaje}:
+                      {dialogo.character}:
                     </span>
-                    <span className={text({ size: "xs" })}>
-                      {dialogo.texto}
-                    </span>
+                    <span className={text({ size: "xs" })}>{dialogo.text}</span>
                   </div>
                 ))}
               </div>
@@ -61,6 +59,5 @@ const SubmitButton = () => {
     </Button>
   );
 };
-
 
 export const maxDuration = 60;

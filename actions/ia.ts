@@ -1,36 +1,42 @@
 "use server";
 
 import { openai } from "@ai-sdk/openai";
-import { generateText } from "ai";
+import { generateObject } from "ai";
+import { z } from "zod";
 
-// generar las conversaciones a partir del texto
+const schema = z.object({
+  scenes: z.array(
+    z.object({
+      context: z
+        .string()
+        .describe(
+          "El contexto explica la situación (tambien puede ser el narrador)"
+        ),
+      dialogues: z.array(
+        z.object({
+          character: z.string().describe("El personaje que habla"),
+          text: z.string().describe("El texto que dice el personaje"),
+        })
+      ),
+    })
+  ),
+});
 
 export const getConversation = async (prevState: any, form: FormData) => {
-  // obtener el texto del formulario
   const message = form.get("message") as string;
 
   if (!message) {
     return [];
   }
 
-  const { text } = await generateText({
+  const { object } = await generateObject({
     model: openai("gpt-4-turbo"),
+    schema: schema,
     system:
-      "Eres un conversor de texto a historietas habladas. responde con un json con las conversaciones, tambien incluye un texto en cada conversación que explique de manera corta la situación. El json debe tener siempre la siguiente estructura: [{situacion: '',dialogos: [{personaje: '',texto: '',},],},]. no agregues al narrador como personaje.",
+      "Convierte un texto en una conversación de varias escenas. Usa un tono infantil.",
     prompt: message,
+    maxTokens: 200,
   });
 
-  const conversation = JSON.parse(
-    text.replace("```json\n", "").replace("```", "")
-  );
-
-  return conversation as Conversation[];
+  return object.scenes;
 };
-
-export interface Conversation {
-  situacion: string;
-  dialogos: Array<{
-    personaje: string;
-    texto: string;
-  }>;
-}
