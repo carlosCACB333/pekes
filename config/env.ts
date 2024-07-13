@@ -4,6 +4,7 @@ const env = z.object({
   OPENAI_API_KEY: z.string(),
   PORT: z.string(),
   SITE_URL: z.string().url(),
+  FAL_KEY: z.string(),
 });
 
 interface Env extends z.infer<typeof env> {}
