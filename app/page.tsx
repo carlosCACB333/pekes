@@ -25,7 +25,7 @@ export default function Home() {
           Crea tus propias historietas con IA a partir de un texto.
         </p>
         <br />
-        <Link href="/comic-generator">¡Prueba ahora!</Link>
+        <Link href="/comic">¡Prueba ahora!</Link>
       </div>
     </section>
   );

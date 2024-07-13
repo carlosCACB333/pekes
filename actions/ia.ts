@@ -46,6 +46,7 @@ export const getConversation = async (prompt: string) => {
 
     return object.scenes as Scene[];
   } catch (error) {
+    console.error(error);
     return [];
   }
 };
@@ -61,6 +62,7 @@ export const getImageFromText = async (prompt: string) => {
     });
     return result.images[0].url as string;
   } catch (error) {
+    console.error(error);
     return "/images/blanck.png";
   }
 };
